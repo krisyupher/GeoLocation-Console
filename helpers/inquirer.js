@@ -41,6 +41,7 @@ const pause = async (message) => {
   await inquirer.prompt(pauseOpts);
 };
 const inputText = async (message) => {
+  console.clear();
   const inputOpts = [
     {
       type: "input",
@@ -58,27 +59,27 @@ const inputText = async (message) => {
   const { option } = await inquirer.prompt(inputOpts);
   return option;
 };
-const listToDelete = async (list = []) => {
+const listPlaces = async (list = []) => {
   console.clear();
   let choicesOpt = list.map((key, index) => {
     return {
       value: key.id,
-      name: `${index + 1}. ${key.description}`,
+      name: `${index + 1}. ${key.nombre}`,
     };
   });
   choicesOpt.unshift({
     value: 0,
     name: `0. Cancelar`,
   });
-  const deleteOpts = [
+  const listOpts = [
     {
       type: "list",
       name: "option",
-      message: "¿Qué tarea deseas eliminar?",
+      message: "Selecciona un lugar",
       choices: choicesOpt,
     },
   ];
-  const opt = await inquirer.prompt(deleteOpts);
+  const opt = await inquirer.prompt(listOpts);
   return opt.option;
 };
 const listCheck = async (list = []) => {
@@ -115,7 +116,7 @@ module.exports = {
   inquirerMenu,
   pause,
   inputText,
-  listToDelete,
+  listPlaces,
   confirm,
   listCheck,
 };
