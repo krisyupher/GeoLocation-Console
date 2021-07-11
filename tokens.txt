@@ -1,1 +1,2 @@
-pk.eyJ1Ijoia3Jpc3l1cGhlciIsImEiOiJja3F3anozd3UwcGNqMnVtbmdoYTc0a2ZmIn0.zSPYuiQ0I80a0yYANi5sPg
+mapboxTOKEN = pk.eyJ1Ijoia3Jpc3l1cGhlciIsImEiOiJja3F3anozd3UwcGNqMnVtbmdoYTc0a2ZmIn0.zSPYuiQ0I80a0yYANi5sPg
+openweathermapAPI = f0595dd08305d20b205778f3e8b9a647

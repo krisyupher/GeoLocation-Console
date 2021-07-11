@@ -1,8 +1,12 @@
+const fs = require("fs");
 const axios = require("axios").default;
 
 class Busquedas {
-  historial = ["Bog", "darid", "san jose"];
-  constructor() {}
+  historial = [];
+  dbPath = "./db/database.json";
+  constructor() {
+    this.historial = this.leerDB();
+  }
   async ciudad(lugar = "") {
     try {
       const intanceAxios = axios.create({
@@ -23,6 +27,48 @@ class Busquedas {
       }));
     } catch (error) {
       return [];
+    }
+  }
+  async climaLupar(lat, lon) {
+    try {
+      const intanceAxiosL = axios.create({
+        baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+        params: {
+          lat,
+          lon,
+          appid: "f0595dd08305d20b205778f3e8b9a647",
+          units: "metric",
+          lang: "es",
+        },
+      });
+      const resp = await intanceAxiosL.get();
+      return {
+        desc: resp.data.weather[0].description,
+        temMin: resp.data.main.temp_min,
+        temMax: resp.data.main.temp_max,
+        temp: resp.data.main.temp,
+      };
+    } catch (error) {
+      console.error("error", error);
+    }
+  }
+  agregarHistorial(lugar = "") {
+    if (this.historial.includes(lugar.toLocaleLowerCase())) {
+      return;
+    } else {
+      this.historial.unshift(lugar);
+      this.guardarDB();
+    }
+  }
+  guardarDB() {
+    fs.writeFileSync(this.dbPath, JSON.stringify(this.historial));
+  }
+  leerDB() {
+    if (fs.existsSync(this.dbPath)) {
+      const info = fs.readFileSync(this.dbPath, { encoding: "utf-8" });
+      return JSON.parse(info);
+    } else {
+      return;
     }
   }
 }

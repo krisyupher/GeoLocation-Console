@@ -1,3 +1,4 @@
+const colors = require("colors");
 const {
   inputText,
   inquirerMenu,
@@ -17,12 +18,23 @@ const main = async () => {
         const listLugares = await busqueda.ciudad(lugar);
         const id = await listPlaces(listLugares);
         const PlaceSelect = listLugares.find((l) => l.id === id);
-        console.log("Ciduad", PlaceSelect.nombre);
-        console.log("lat", PlaceSelect.lng);
-        console.log("1Lng", PlaceSelect.lat);
+        busqueda.agregarHistorial(PlaceSelect.nombre);
+        const dataCity = await busqueda.climaLupar(
+          PlaceSelect.lat,
+          PlaceSelect.lng
+        );
+        console.log("Ciduad: ", PlaceSelect.nombre);
+        console.log("Latitud: ", PlaceSelect.lat);
+        console.log("Longitudon: ", PlaceSelect.lng);
+        console.log("Teperatura: ", dataCity.temp);
+        console.log("Tem Mínima: ", dataCity.temMin);
+        console.log("Tem Máxima: ", dataCity.temMax);
+        console.log("Cómo está el clima: ", dataCity.desc);
         break;
       case 2:
-        console.log("2");
+        busqueda.historial.forEach((element, index) => {
+          console.log(`${colors.green(index + ".")} ${element}`);
+        });
         break;
       case 0:
         console.log("3");
